@@ -98,12 +98,55 @@ class Map extends React.Component {
   }
 }
 
+class LocationListItem extends React.Component {
+  render() {
+    return (
+      <li>
+        <a href="#" onClick={this.handleClick.bind(this)}>
+          {this.props.l.file}
+        </a>
+      </li>
+    );
+  }
+
+  handleClick(evt) {
+    evt.preventDefault();
+    this.props.onClick(this.props.l);
+  }
+}
+
+class LocationList extends React.Component {
+  render() {
+    var locationList = this.props.data.locations.map(function(l) {
+      return <LocationListItem
+        key={l.file} l={l}
+        onClick={this.handleClick.bind(this)}
+        />;
+    }.bind(this));
+    return <ul className="list-unstyled">{locationList}</ul>;
+  }
+
+  handleClick(l) {
+    this.props.onClick(l);
+  }
+}
+
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div className="container">
         <Navbar onSave={this.handleSave.bind(this)} />
-        <Map ref="map" data={this.props.data} />
+        <div className="row">
+          <div className="col-sm-10">
+            <Map ref="map" data={this.props.data} />
+          </div>
+          <div className="col-sm-2">
+            <LocationList
+              data={this.props.data}
+              onClick={this.handleOpen.bind(this)}
+              />
+          </div>
+        </div>
       </div>
     );
   }
@@ -115,6 +158,10 @@ class App extends React.Component {
       data: JSON.stringify(this.props.data),
       contentType: 'application/json',
     });
+  }
+
+  handleOpen(l) {
+    console.log('opening', l);
   }
 }
 
