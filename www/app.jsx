@@ -70,7 +70,8 @@ class RasterLayer extends React.Component {
 
 class Location extends React.Component {
   render() {
-    var point = {type: 'Point', coordinates: this.props.l.fixed.lnglat};
+    var pos = this.props.l.fixed;
+    var point = {type: 'Point', coordinates: [pos.lng, pos.lat]};
     var d = this.props.rs.path(point);
     return <path d={d} />;
   }
