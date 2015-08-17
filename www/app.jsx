@@ -24,6 +24,47 @@ class ReferenceSystem {
 
     this.path = d3.geo.path()
         .projection(this.projection);
+
+    this.tile = d3.geo.tile()
+        .size([this.width, this.height]);
+  }
+}
+
+class RasterLayer extends React.Component {
+  render() {
+    var rs = this.props.rs;
+
+    var tiles = rs.tile
+        .scale(rs.projection.scale() * 2 * Math.PI)
+        .translate(rs.projection.translate())
+        ();
+
+    var tileNodes = tiles.map(function(d) {
+      var url = this.url(d[0], d[1], d[2]);
+      var image = (
+        '<image width="1" height="1" x="' + d[0] + '" y="' + d[1] + '"' +
+        ' xlink:href="' + url + '" />'
+      );
+      return <g dangerouslySetInnerHTML={{ __html: image }} />
+    }.bind(this));
+
+    var transform = 'scale(' + tiles.scale + ')'
+                  + 'translate(' + tiles.translate + ')';
+    return <g transform={transform}>{tileNodes}</g>;
+  }
+
+   url(x, y, z) {
+    var quad = '';
+    for (var i = z; i > 0; i--) {
+      var digit = 0;
+      var mask = 1 << (i - 1);
+      if ((x & mask) !== 0) digit += 1;
+      if ((y & mask) !== 0) digit += 2;
+      quad = quad + digit;
+    }
+    var n = (Math.random() * 4 | 0);
+    return 'http://ak.dynamic.t' + n + '.tiles.virtualearth.net/comp/ch/' +
+      quad + '?mkt=en-us&it=A,G,L,LA&shading=hill&og=98&n=z';
   }
 }
 
@@ -49,6 +90,7 @@ class App extends React.Component {
     })
     return (
       <svg width={rs.width} height={rs.height}>
+        <RasterLayer rs={rs} />
         {locations}
       </svg>
     );
