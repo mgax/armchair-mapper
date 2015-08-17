@@ -99,7 +99,12 @@ class Map extends React.Component {
 
 class App extends React.Component {
   render() {
-    return <Map ref="map" data={this.props.data} />;
+    return (
+      <div>
+        <Navbar />
+        <Map ref="map" data={this.props.data} />
+      </div>
+    );
   }
 }
 
