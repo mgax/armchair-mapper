@@ -76,7 +76,7 @@ class Location extends React.Component {
   }
 }
 
-class App extends React.Component {
+class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -97,6 +97,12 @@ class App extends React.Component {
   }
 }
 
+class App extends React.Component {
+  render() {
+    return <Map ref="map" data={this.props.data} />;
+  }
+}
+
 d3.json('map.json', function(data) {
-  React.render(<App data={data} />, document.querySelector('body'));
+  window.app = React.render(<App data={data} />, document.querySelector('body'));
 });
