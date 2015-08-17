@@ -1,0 +1,10 @@
+{
+  "name": "armchair-mapper",
+  "private": true,
+  "dependencies": {
+    "express": "^4.13.3"
+  },
+  "scripts": {
+    "serve": "node server.js"
+  }
+}
