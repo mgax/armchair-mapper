@@ -101,10 +101,19 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar onSave={this.handleSave.bind(this)} />
         <Map ref="map" data={this.props.data} />
       </div>
     );
+  }
+
+  handleSave() {
+    $.ajax({
+      url: 'map.json',
+      method: 'POST',
+      data: JSON.stringify(this.props.data),
+      contentType: 'application/json',
+    });
   }
 }
 

@@ -27,6 +27,6 @@ class Navbar extends React.Component {
 
   handleSave(evt) {
     evt.preventDefault();
-    console.log('save');
+    this.props.onSave();
   }
 }
