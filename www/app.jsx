@@ -138,11 +138,19 @@ class LocationWindow extends React.Component {
       <div className="locationWindow">
         <div className="locationWindow-header">
           {l.file}
-          <button type="button" className="close">&times;</button>
+          <button
+            className="close"
+            onClick={this.handleCloseClick.bind(this)}
+            >&times;</button>
         </div>
         <img src={'/img/' + l.file} />
       </div>
     );
+  }
+
+  handleCloseClick(evt) {
+    evt.preventDefault();
+    this.props.onClose(this.props.l);
   }
 }
 
@@ -154,13 +162,18 @@ class OpenLocations extends React.Component {
 
   render() {
     var openLocations = this.state.open.map(function(l) {
-      return <LocationWindow l={l} />;
-    });
+      return <LocationWindow l={l} onClose={this.handleClose.bind(this)} />;
+    }.bind(this));
     return <div>{openLocations}</div>;
   }
 
   handleOpen(l) {
     var open = [].concat(this.state.open, [l]);
+    this.setState({open: open});
+  }
+
+  handleClose(l) {
+    var open = this.state.open.filter(function(o) { return o !== l; });
     this.setState({open: open});
   }
 }
