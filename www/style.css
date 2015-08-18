@@ -2,10 +2,14 @@
   display: block;
 }
 
+.locationWindow-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .locationWindow {
   position: absolute;
-  top: 200px;
-  left: 500px;
   background: white;
   border: 1px solid #ccc;
 }

@@ -132,10 +132,15 @@ class LocationList extends React.Component {
 }
 
 class LocationWindow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {style: {left: 500, top: 200}};
+  }
+
   render() {
     var l = this.props.l;
     return (
-      <div className="locationWindow">
+      <div className="locationWindow" style={this.state.style}>
         <div className="locationWindow-header">
           {l.file}
           <button
@@ -146,6 +151,18 @@ class LocationWindow extends React.Component {
         <img src={'/img/' + l.file} />
       </div>
     );
+  }
+
+  componentDidMount() {
+    var drag = d3.behavior.drag()
+      .origin(function(d) {
+        return {x: this.state.style.left, y: this.state.style.top};
+      }.bind(this))
+      .on('drag', function() {
+        this.setState({style: {left: d3.event.x, top: d3.event.y}});
+      }.bind(this));
+
+    d3.select(React.findDOMNode(this)).call(drag);
   }
 
   handleCloseClick(evt) {
@@ -164,7 +181,7 @@ class OpenLocations extends React.Component {
     var openLocations = this.state.open.map(function(l) {
       return <LocationWindow l={l} onClose={this.handleClose.bind(this)} />;
     }.bind(this));
-    return <div>{openLocations}</div>;
+    return <div className="locationWindow-container">{openLocations}</div>;
   }
 
   handleOpen(l) {
