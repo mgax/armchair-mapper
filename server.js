@@ -18,6 +18,8 @@ app.post('/map.json', function(req, res) {
   res.send('ok');
 });
 
+app.use('/img', express.static(proj + '/img'));
+
 app.use(express.static('www'));
 
 var server = app.listen(+(process.env.PORT || 3000), function () {

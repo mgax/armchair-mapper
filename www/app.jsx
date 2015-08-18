@@ -131,6 +131,40 @@ class LocationList extends React.Component {
   }
 }
 
+class LocationWindow extends React.Component {
+  render() {
+    var l = this.props.l;
+    return (
+      <div className="locationWindow">
+        <div className="locationWindow-header">
+          {l.file}
+          <button type="button" className="close">&times;</button>
+        </div>
+        <img src={'/img/' + l.file} />
+      </div>
+    );
+  }
+}
+
+class OpenLocations extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {open: []};
+  }
+
+  render() {
+    var openLocations = this.state.open.map(function(l) {
+      return <LocationWindow l={l} />;
+    });
+    return <div>{openLocations}</div>;
+  }
+
+  handleOpen(l) {
+    var open = [].concat(this.state.open, [l]);
+    this.setState({open: open});
+  }
+}
+
 class App extends React.Component {
   render() {
     return (
@@ -147,6 +181,7 @@ class App extends React.Component {
               />
           </div>
         </div>
+        <OpenLocations ref="open" />
       </div>
     );
   }
@@ -161,7 +196,7 @@ class App extends React.Component {
   }
 
   handleOpen(l) {
-    console.log('opening', l);
+    this.refs.open.handleOpen(l);
   }
 }
 

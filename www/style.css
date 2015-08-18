@@ -1,3 +1,22 @@
 .locationList > li > a {
   display: block;
 }
+
+.locationWindow {
+  position: absolute;
+  top: 200px;
+  left: 500px;
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.locationWindow-header {
+  height: 30px;
+  padding: 3px 6px;
+  cursor: move;
+}
+
+.locationWindow img {
+  max-width: 300px;
+  max-height: 300px;
+}
