@@ -123,7 +123,7 @@ class LocationList extends React.Component {
         onClick={this.handleClick.bind(this)}
         />;
     }.bind(this));
-    return <ul className="list-unstyled">{locationList}</ul>;
+    return <ul className="list-unstyled locationList">{locationList}</ul>;
   }
 
   handleClick(l) {
