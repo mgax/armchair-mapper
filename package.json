@@ -3,7 +3,8 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.13.3",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "json-stable-stringify": "^1.0.0"
   },
   "scripts": {
     "serve": "node server.js"

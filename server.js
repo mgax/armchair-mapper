@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var stringify = require('json-stable-stringify');
 
 var proj = process.env.PROJECT || '/tmp';
 var app = express();
@@ -13,7 +14,7 @@ app.get('/map.json', function (req, res) {
 });
 
 app.post('/map.json', function(req, res) {
-  var data = JSON.stringify(req.body, null, 2) + '\n';
+  var data = stringify(req.body, {space: 2}) + '\n';
   fs.writeFileSync(proj + '/map.json', data);
   res.send('ok');
 });
