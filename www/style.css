@@ -1,26 +1,26 @@
-.locationList > li > a {
+.photoList > li > a {
   display: block;
 }
 
-.locationWindow-container {
+.photoWindow-container {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.locationWindow {
+.photoWindow {
   position: absolute;
   background: white;
   border: 1px solid #ccc;
 }
 
-.locationWindow-header {
+.photoWindow-header {
   height: 30px;
   padding: 3px 6px;
   cursor: move;
 }
 
-.locationWindow img {
+.photoWindow img {
   max-width: 300px;
   max-height: 300px;
 }

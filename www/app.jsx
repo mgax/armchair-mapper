@@ -68,7 +68,7 @@ class RasterLayer extends React.Component {
   }
 }
 
-class Location extends React.Component {
+class Photo extends React.Component {
   render() {
     var pos = this.props.l.fixed;
     var point = {type: 'Point', coordinates: [pos.lng, pos.lat]};
@@ -86,19 +86,19 @@ class Map extends React.Component {
   }
   render() {
     var rs = this.state.rs;
-    var locations = this.props.data.locations.map(function(l) {
-      return <Location l={l} rs={rs} />;
+    var photos = this.props.data.photos.map(function(l) {
+      return <Photo l={l} rs={rs} />;
     })
     return (
       <svg width={rs.width} height={rs.height}>
         <RasterLayer rs={rs} />
-        {locations}
+        {photos}
       </svg>
     );
   }
 }
 
-class LocationListItem extends React.Component {
+class PhotoListItem extends React.Component {
   render() {
     return (
       <li>
@@ -115,15 +115,15 @@ class LocationListItem extends React.Component {
   }
 }
 
-class LocationList extends React.Component {
+class PhotoList extends React.Component {
   render() {
-    var locationList = this.props.data.locations.map(function(l) {
-      return <LocationListItem
+    var photoList = this.props.data.photos.map(function(l) {
+      return <PhotoListItem
         key={l.file} l={l}
         onClick={this.handleClick.bind(this)}
         />;
     }.bind(this));
-    return <ul className="list-unstyled locationList">{locationList}</ul>;
+    return <ul className="list-unstyled photoList">{photoList}</ul>;
   }
 
   handleClick(l) {
@@ -131,7 +131,7 @@ class LocationList extends React.Component {
   }
 }
 
-class LocationWindow extends React.Component {
+class PhotoWindow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {style: {left: 500, top: 200}};
@@ -140,8 +140,8 @@ class LocationWindow extends React.Component {
   render() {
     var l = this.props.l;
     return (
-      <div className="locationWindow" style={this.state.style}>
-        <div className="locationWindow-header">
+      <div className="photoWindow" style={this.state.style}>
+        <div className="photoWindow-header">
           {l.file}
           <button
             className="close"
@@ -171,17 +171,17 @@ class LocationWindow extends React.Component {
   }
 }
 
-class OpenLocations extends React.Component {
+class OpenPhotos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {open: []};
   }
 
   render() {
-    var openLocations = this.state.open.map(function(l) {
-      return <LocationWindow l={l} onClose={this.handleClose.bind(this)} />;
+    var openPhotos = this.state.open.map(function(l) {
+      return <PhotoWindow l={l} onClose={this.handleClose.bind(this)} />;
     }.bind(this));
-    return <div className="locationWindow-container">{openLocations}</div>;
+    return <div className="photoWindow-container">{openPhotos}</div>;
   }
 
   handleOpen(l) {
@@ -205,13 +205,13 @@ class App extends React.Component {
             <Map ref="map" data={this.props.data} />
           </div>
           <div className="col-sm-2">
-            <LocationList
+            <PhotoList
               data={this.props.data}
               onClick={this.handleOpen.bind(this)}
               />
           </div>
         </div>
-        <OpenLocations ref="open" />
+        <OpenPhotos ref="open" />
       </div>
     );
   }
