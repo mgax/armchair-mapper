@@ -18,7 +18,10 @@ class App extends React.Component {
       <div className="container fullheight">
         <Navbar onSave={this.handleSave.bind(this)} />
         <div className="row fullheight top-below-navbar">
-          <div className="col-sm-10 fullheight">
+          <div className="col-sm-2">
+            <LocationList data={this.props.data} />
+          </div>
+          <div className="col-sm-8 fullheight">
             <Map ref="map" data={this.props.data} />
           </div>
           <div className="col-sm-2">
