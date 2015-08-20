@@ -30,6 +30,17 @@ class ReferenceSystem {
   }
 }
 
+class SvgImage extends React.Component {
+  render() {
+    var p = this.props;
+    var image = (
+      '<image width="1" height="1" x="' + p.x + '" y="' + p.y + '"' +
+      ' xlink:href="' + p.src + '" />'
+    );
+    return <g dangerouslySetInnerHTML={{ __html: image }} />
+  }
+}
+
 class RasterLayer extends React.Component {
   render() {
     var rs = this.props.rs;
@@ -40,12 +51,7 @@ class RasterLayer extends React.Component {
         ();
 
     var tileNodes = tiles.map(function(d) {
-      var url = this.url(d[0], d[1], d[2]);
-      var image = (
-        '<image width="1" height="1" x="' + d[0] + '" y="' + d[1] + '"' +
-        ' xlink:href="' + url + '" />'
-      );
-      return <g dangerouslySetInnerHTML={{ __html: image }} />
+      return <SvgImage x={d[0]} y={d[1]} src={this.url(d[0], d[1], d[2])} />
     }.bind(this));
 
     var transform = 'scale(' + tiles.scale + ')'
