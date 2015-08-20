@@ -97,7 +97,7 @@ class Map extends React.Component {
       return <Photo l={l} rs={rs} />;
     })
     return (
-      <svg width={rs.width} height={rs.height}>
+      <svg className="map">
         <RasterLayer rs={rs} />
         {photos}
       </svg>
@@ -209,10 +209,10 @@ class OpenPhotos extends React.Component {
 class App extends React.Component {
   render() {
     return (
-      <div className="container">
+      <div className="container fullheight">
         <Navbar onSave={this.handleSave.bind(this)} />
-        <div className="row">
-          <div className="col-sm-10">
+        <div className="row fullheight top-below-navbar">
+          <div className="col-sm-10 fullheight">
             <Map ref="map" data={this.props.data} />
           </div>
           <div className="col-sm-2">
