@@ -34,7 +34,8 @@ class SvgImage extends React.Component {
   render() {
     var p = this.props;
     var image = (
-      '<image width="1" height="1" x="' + p.x + '" y="' + p.y + '"' +
+      '<image width="' + (p.w || 1) + '" height="' + (p.h || 1) + '"' +
+      ' x="' + p.x + '" y="' + p.y + '"' +
       ' xlink:href="' + p.src + '" />'
     );
     return <g dangerouslySetInnerHTML={{ __html: image }} />
@@ -154,7 +155,11 @@ class PhotoWindow extends React.Component {
             onClick={this.handleCloseClick.bind(this)}
             >&times;</button>
         </div>
-        <img src={'/img/' + l.file} />
+        <svg>
+          <g transform={'rotate(' + l.pos.roll + ' 150 150)'}>
+            <SvgImage x="0" y="0" w="300" h="300" src={'/img/' + l.file} />
+          </g>
+        </svg>
       </div>
     );
   }
