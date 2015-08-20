@@ -77,7 +77,7 @@ class RasterLayer extends React.Component {
 
 class Photo extends React.Component {
   render() {
-    var pos = this.props.l.fixed;
+    var pos = this.props.p.fixed;
     var point = {type: 'Point', coordinates: [pos.lng, pos.lat]};
     var d = this.props.rs.path(point);
     return <path d={d} />;
@@ -93,8 +93,8 @@ class Map extends React.Component {
   }
   render() {
     var rs = this.state.rs;
-    var photos = this.props.data.photos.map(function(l) {
-      return <Photo l={l} rs={rs} />;
+    var photos = this.props.data.photos.map(function(p) {
+      return <Photo p={p} rs={rs} />;
     })
     return (
       <svg className="map">
@@ -110,7 +110,7 @@ class PhotoListItem extends React.Component {
     return (
       <li>
         <a href="#" onClick={this.handleClick.bind(this)}>
-          {this.props.l.file}
+          {this.props.p.file}
         </a>
       </li>
     );
@@ -118,23 +118,23 @@ class PhotoListItem extends React.Component {
 
   handleClick(evt) {
     evt.preventDefault();
-    this.props.onClick(this.props.l);
+    this.props.onClick(this.props.p);
   }
 }
 
 class PhotoList extends React.Component {
   render() {
-    var photoList = this.props.data.photos.map(function(l) {
+    var photoList = this.props.data.photos.map(function(p) {
       return <PhotoListItem
-        key={l.file} l={l}
+        key={p.file} p={p}
         onClick={this.handleClick.bind(this)}
         />;
     }.bind(this));
     return <ul className="list-unstyled photoList">{photoList}</ul>;
   }
 
-  handleClick(l) {
-    this.props.onClick(l);
+  handleClick(p) {
+    this.props.onClick(p);
   }
 }
 
@@ -145,19 +145,19 @@ class PhotoWindow extends React.Component {
   }
 
   render() {
-    var l = this.props.l;
+    var p = this.props.p;
     return (
       <div className="photoWindow" style={this.state.style}>
         <div className="photoWindow-header">
-          {l.file}
+          {p.file}
           <button
             className="close"
             onClick={this.handleCloseClick.bind(this)}
             >&times;</button>
         </div>
         <svg>
-          <g transform={'rotate(' + l.pos.roll + ' 150 150)'}>
-            <SvgImage x="0" y="0" w="300" h="300" src={'/img/' + l.file} />
+          <g transform={'rotate(' + p.pos.roll + ' 150 150)'}>
+            <SvgImage x="0" y="0" w="300" h="300" src={'/img/' + p.file} />
           </g>
         </svg>
       </div>
@@ -178,7 +178,7 @@ class PhotoWindow extends React.Component {
 
   handleCloseClick(evt) {
     evt.preventDefault();
-    this.props.onClose(this.props.l);
+    this.props.onClose(this.props.p);
   }
 }
 
@@ -189,19 +189,19 @@ class OpenPhotos extends React.Component {
   }
 
   render() {
-    var openPhotos = this.state.open.map(function(l) {
-      return <PhotoWindow l={l} onClose={this.handleClose.bind(this)} />;
+    var openPhotos = this.state.open.map(function(p) {
+      return <PhotoWindow p={p} onClose={this.handleClose.bind(this)} />;
     }.bind(this));
     return <div className="photoWindow-container">{openPhotos}</div>;
   }
 
-  handleOpen(l) {
-    var open = [].concat(this.state.open, [l]);
+  handleOpen(p) {
+    var open = [].concat(this.state.open, [p]);
     this.setState({open: open});
   }
 
-  handleClose(l) {
-    var open = this.state.open.filter(function(o) { return o !== l; });
+  handleClose(p) {
+    var open = this.state.open.filter(function(o) { return o !== p; });
     this.setState({open: open});
   }
 }
@@ -236,8 +236,8 @@ class App extends React.Component {
     });
   }
 
-  handleOpen(l) {
-    this.refs.open.handleOpen(l);
+  handleOpen(p) {
+    this.refs.open.handleOpen(p);
   }
 }
 
