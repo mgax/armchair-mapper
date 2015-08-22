@@ -15,25 +15,24 @@ class SvgImage extends React.Component {
 class App extends FluxComponent {
   fetchState(store) {
     return {
-      data: store.getData(),
+      loaded: !! store.getData(),
     };
   }
 
   render() {
-    if(! this.state.data) { return <p>Loading...</p>; }
+    if(! this.state.loaded) { return <p>Loading...</p>; }
     return (
       <div className="container fullheight">
         <Navbar onSave={this.handleSave.bind(this)} />
         <div className="row fullheight top-below-navbar">
           <div className="col-sm-2">
-            <LocationList data={this.state.data} />
+            <LocationList />
           </div>
           <div className="col-sm-8 fullheight">
-            <Map ref="map" data={this.state.data} />
+            <Map ref="map" />
           </div>
           <div className="col-sm-2">
             <PhotoList
-              data={this.state.data}
               onClick={this.handleOpen.bind(this)}
               />
           </div>
@@ -44,12 +43,7 @@ class App extends FluxComponent {
   }
 
   handleSave() {
-    $.ajax({
-      url: 'map.json',
-      method: 'POST',
-      data: JSON.stringify(this.state.data),
-      contentType: 'application/json',
-    });
+    dataController.save();
   }
 
   handleOpen(p) {

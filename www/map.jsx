@@ -63,21 +63,27 @@ class RasterLayer extends React.Component {
   }
 }
 
-class Map extends React.Component {
+class Map extends FluxComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      rs: new ReferenceSystem({bbox: props.data.bbox}),
+    this.rs = new ReferenceSystem({bbox: this.state.bbox});
+  }
+
+  fetchState(store) {
+    var data = store.getData();
+    return {
+      bbox: data.bbox,
+      photos: data.photos,
     };
   }
+
   render() {
-    var rs = this.state.rs;
-    var photos = this.props.data.photos.map(function(p) {
-      return <Photo p={p} rs={rs} />;
-    })
+    var photos = this.state.photos.map(function(p) {
+      return <Photo p={p} rs={this.rs} />;
+    }.bind(this));
     return (
       <svg className="map">
-        <RasterLayer rs={rs} />
+        <RasterLayer rs={this.rs} />
         {photos}
       </svg>
     );

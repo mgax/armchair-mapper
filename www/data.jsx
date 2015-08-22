@@ -68,6 +68,15 @@ class DataController {
     }.bind(this));
   }
 
+  save() {
+    $.ajax({
+      url: 'map.json',
+      method: 'POST',
+      data: JSON.stringify(this.store.getData()),
+      contentType: 'application/json',
+    });
+  }
+
   emitServerLoad(data) {
     this.dispatcher.dispatch({
       source: 'SERVER_ACTION',

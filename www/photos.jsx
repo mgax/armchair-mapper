@@ -26,9 +26,16 @@ class PhotoListItem extends React.Component {
   }
 }
 
-class PhotoList extends React.Component {
+class PhotoList extends FluxComponent {
+  fetchState(store) {
+    var data = store.getData();
+    return {
+      photos: data.photos,
+    };
+  }
+
   render() {
-    var photoList = this.props.data.photos.map(function(p) {
+    var photoList = this.state.photos.map(function(p) {
       return <PhotoListItem
         key={p.file} p={p}
         onClick={this.handleClick.bind(this)}

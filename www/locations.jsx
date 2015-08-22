@@ -17,9 +17,16 @@ class LocationListItem extends React.Component {
   }
 }
 
-class LocationList extends React.Component {
+class LocationList extends FluxComponent {
+  fetchState(store) {
+    var data = store.getData();
+    return {
+      locations: data.locations,
+    };
+  }
+
   render() {
-    var locationList = this.props.data.locations.map(function(l) {
+    var locationList = this.state.locations.map(function(l) {
       return <LocationListItem
         key={l.id} l={l}
         onClick={this.handleClick.bind(this)}
@@ -43,7 +50,7 @@ class LocationList extends React.Component {
 
   handleCreateClick(evt) {
     evt.preventDefault();
-    this.props.data.locations.push({
+    this.state.locations.push({
       id: 'loc',
     });
   }
