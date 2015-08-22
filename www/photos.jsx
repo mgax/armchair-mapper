@@ -90,7 +90,14 @@ class PhotoWindow extends React.Component {
                                      'scale(' + d3.event.scale + ')');
         });
 
-    d3.select(React.findDOMNode(this.refs.svg)).call(zoom);
+    d3.select(React.findDOMNode(this.refs.svg))
+        .on('click', function() {
+          // assume 4/3 aspect ratio
+          var x = (d3.event.offsetX - 150) / 300 * 4 / 5;
+          var y = (150 - d3.event.offsetY) / 300 * 4 / 5;
+          console.log([x, y]);
+        })
+        .call(zoom);
   }
 
   handleCloseClick(evt) {
