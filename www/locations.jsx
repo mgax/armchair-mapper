@@ -50,9 +50,7 @@ class LocationList extends FluxComponent {
 
   handleCreateClick(evt) {
     evt.preventDefault();
-    this.state.locations.push({
-      id: 'loc',
-    });
+    dataController.emitCreateLocation();
   }
 
   handleClick(l) {

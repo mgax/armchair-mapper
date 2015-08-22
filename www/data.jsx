@@ -18,6 +18,16 @@ class SceneStore extends EventEmitter {
     this._data = data;
   }
 
+  _createLocation(text) {
+    var id = 1;
+    this._data.locations.forEach(function(l) {
+      if(l.id >= id) { id = l.id + 1; }
+    });
+    this._data.locations.push({
+      id: id,
+    });
+  }
+
   getData() {
     return this._data;
   }
@@ -45,6 +55,11 @@ class SceneStore extends EventEmitter {
     switch(action.actionType) {
       case DATA_LOAD:
         this._load(action.data);
+        this.emitChange();
+        break;
+
+      case LOCATION_CREATE:
+        this._createLocation(text);
         this.emitChange();
         break;
     }
@@ -83,6 +98,15 @@ class DataController {
       action: {
         actionType: DATA_LOAD,
         data: data,
+      },
+    });
+  }
+
+  emitCreateLocation() {
+    this.dispatcher.dispatch({
+      source: 'VIEW_ACTION',
+      action: {
+        actionType: LOCATION_CREATE,
       },
     });
   }
