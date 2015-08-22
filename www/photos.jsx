@@ -57,9 +57,11 @@ class PhotoWindow extends React.Component {
             onClick={this.handleCloseClick.bind(this)}
             >&times;</button>
         </div>
-        <svg>
-          <g transform={'rotate(' + p.pos.roll + ' 150 150)'}>
-            <SvgImage x="0" y="0" w="300" h="300" src={'/img/' + p.file} />
+        <svg ref="svg">
+          <g ref="zoom">
+            <g transform={'rotate(' + p.pos.roll + ' 150 150)'}>
+              <SvgImage x="0" y="0" w="300" h="300" src={'/img/' + p.file} />
+            </g>
           </g>
         </svg>
       </div>
@@ -76,6 +78,19 @@ class PhotoWindow extends React.Component {
       }.bind(this));
 
     d3.select(React.findDOMNode(this)).call(drag);
+
+    var zoomNode = d3.select(React.findDOMNode(this.refs.zoom));
+    var zoom = d3.behavior.zoom()
+        .scaleExtent([1, 16])
+        .on('zoomstart', function() {
+          d3.event.sourceEvent.stopPropagation();
+        })
+        .on('zoom', function() {
+          zoomNode.attr('transform', 'translate(' + d3.event.translate + ')' +
+                                     'scale(' + d3.event.scale + ')');
+        });
+
+    d3.select(React.findDOMNode(this.refs.svg)).call(zoom);
   }
 
   handleCloseClick(evt) {
