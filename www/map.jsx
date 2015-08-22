@@ -2,8 +2,8 @@
 
 class ReferenceSystem {
   constructor(props) {
-    this.width = 960;
-    this.height = 500;
+    this.width = 780;
+    this.height = 400;
     this.projection = d3.geo.mercator()
         .scale(1)
         .translate([0, 0]);
