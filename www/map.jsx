@@ -63,6 +63,15 @@ class RasterLayer extends React.Component {
   }
 }
 
+class PhotoPoint extends React.Component {
+  render() {
+    var pos = this.props.p.fixed;
+    var point = {type: 'Point', coordinates: [pos.lng, pos.lat]};
+    var d = this.props.rs.path(point);
+    return <path d={d} />;
+  }
+}
+
 class Map extends FluxComponent {
   constructor(props) {
     super(props);
@@ -79,7 +88,7 @@ class Map extends FluxComponent {
 
   render() {
     var photos = this.state.photos.map(function(p) {
-      return <Photo p={p} rs={this.rs} />;
+      return <PhotoPoint p={p} rs={this.rs} />;
     }.bind(this));
     return (
       <svg className="map">

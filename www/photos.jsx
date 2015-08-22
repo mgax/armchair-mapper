@@ -1,14 +1,5 @@
 'use strict';
 
-class Photo extends React.Component {
-  render() {
-    var pos = this.props.p.fixed;
-    var point = {type: 'Point', coordinates: [pos.lng, pos.lat]};
-    var d = this.props.rs.path(point);
-    return <path d={d} />;
-  }
-}
-
 class PhotoListItem extends React.Component {
   render() {
     return (
