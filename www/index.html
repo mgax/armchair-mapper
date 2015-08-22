@@ -5,11 +5,16 @@
 <link rel="stylesheet" href="style.css">
 
 <body>
+<script>window.module = {};</script>
+<script src="//cdn.rawgit.com/Gozala/events/v1.0.2/events.js"></script>
+<script>window.EventEmitter = window.module.exports; delete window.module;</script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.js"></script>
 <script src="//cdn.rawgit.com/d3/d3-plugins/41bbd13ae/geo/tile/tile.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/flux/2.1.1/Flux.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+<script src="data.jsx" type="text/jsx"></script>
 <script src="navbar.jsx" type="text/jsx"></script>
 <script src="common.jsx" type="text/jsx"></script>
 <script src="map.jsx" type="text/jsx"></script>

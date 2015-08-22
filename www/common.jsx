@@ -12,21 +12,28 @@ class SvgImage extends React.Component {
   }
 }
 
-class App extends React.Component {
+class App extends FluxComponent {
+  fetchState(store) {
+    return {
+      data: store.getData(),
+    };
+  }
+
   render() {
+    if(! this.state.data) { return <p>Loading...</p>; }
     return (
       <div className="container fullheight">
         <Navbar onSave={this.handleSave.bind(this)} />
         <div className="row fullheight top-below-navbar">
           <div className="col-sm-2">
-            <LocationList data={this.props.data} />
+            <LocationList data={this.state.data} />
           </div>
           <div className="col-sm-8 fullheight">
-            <Map ref="map" data={this.props.data} />
+            <Map ref="map" data={this.state.data} />
           </div>
           <div className="col-sm-2">
             <PhotoList
-              data={this.props.data}
+              data={this.state.data}
               onClick={this.handleOpen.bind(this)}
               />
           </div>
@@ -40,7 +47,7 @@ class App extends React.Component {
     $.ajax({
       url: 'map.json',
       method: 'POST',
-      data: JSON.stringify(this.props.data),
+      data: JSON.stringify(this.state.data),
       contentType: 'application/json',
     });
   }
@@ -51,7 +58,6 @@ class App extends React.Component {
 }
 
 function main() {
-  d3.json('map.json', function(data) {
-    window.app = React.render(<App data={data} />, document.querySelector('body'));
-  });
+  window.app = React.render(<App />, document.querySelector('body'));
+  dataController.load();
 }
